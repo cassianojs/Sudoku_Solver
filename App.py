@@ -6,16 +6,16 @@ def sudokuSolver(board):
     pos = getEmpty(board)
     if pos == None:
         return True
-    else:
-        row, col = pos
-        for i in range(1, 10):
-            if isNumValid(board, row, col, i):
-                board[row][col] = i
 
-                if sudokuSolver(board):
-                    return True
-                board[row][col] = 0
-        return False
+    row, col = pos
+    for i in range(1, 10):
+        if isNumValid(board, row, col, i):
+            board[row][col] = i
+
+            if sudokuSolver(board):
+                return True
+            board[row][col] = 0
+    return False
 
 
 # Checks if the square is empty and fill a set with the empty squares
@@ -56,9 +56,22 @@ def isNumValid(board, row, col, n, x=0):
     return True
 
 
+# Print a tidy board
 def printBoard(board):
-    for i in range(len(board)):
-        print(board[i])
+    print(" -------------------------")
+    for r in range(len(board)):
+        if r % 3 == 0 and r != 0:
+            print(" -------------------------")
+        print("| ", end="")
+
+        for c in range(len(board)):
+            if c % 3 == 0 and c != 0:
+                print(" | ", end="")
+            if c == 8:
+                print(str(board[r][c]) + " |")
+            else:
+                print(str(board[r][c]) + " ", end="")
+    print(" -------------------------")
 
 
 board = [
@@ -75,15 +88,5 @@ board = [
 
 printBoard(board)
 sudokuSolver(board)
-print("-----------------")
+print("\n", "Solved below:", "\n")
 printBoard(board)
-"""
-def fillEmpty(board, eSet):
-    for r in range(len(board)):
-        for c in range(len(board)):
-            if board[r][c] == 0:
-                eSet.add((r, c))
-
-empty = set()
-fillEmpty(board, empty)
-"""
